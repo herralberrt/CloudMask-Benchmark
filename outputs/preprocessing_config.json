@@ -1,0 +1,35 @@
+{
+  "version": "1.0",
+  "selected_bands": {
+    "indices": [
+      3,
+      2,
+      1,
+      7
+    ],
+    "names": [
+      "Red (B4)",
+      "Green (B3)",
+      "Blue (B2)",
+      "NIR (B8)"
+    ]
+  },
+  "normalization": {
+    "method": "linear_scaling",
+    "scale_factor": 10000,
+    "output_range": [
+      0,
+      1
+    ]
+  },
+  "target_format": {
+    "type": "multiclass_segmentation",
+    "classes": {
+      "0": "Clear sky",
+      "1": "Thin cloud",
+      "2": "Thick cloud",
+      "3": "Cloud shadow"
+    },
+    "num_classes": 4
+  }
+}
