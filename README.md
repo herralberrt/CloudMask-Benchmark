@@ -4,6 +4,7 @@
 
 **Project Overview:**  
 This project trains and compares different ML approaches (Random Forest and U-Net) for cloud detection in satellite imagery, using the CloudSEN12 dataset with Sentinel-2 multispectral data.
+-
 
 ---
 
