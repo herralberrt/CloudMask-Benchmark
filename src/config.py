@@ -18,11 +18,11 @@ class Config:
     SATELLITE = "Sentinel-2"
     
     # Full dataset statistics
-    FULL_DATASET_SIZE = 49400  # Approximate
+    FULL_DATASET_SIZE = 50247
     
     # Week 1 subset configuration
     SUBSET_FRACTION = 0.10  # Use 10% for Week 1
-    SUBSET_SIZE = 4940  # min(100, int(49400 * 0.10))
+    SUBSET_SIZE = 5024
     
     # Train/Val/Test split
     TRAIN_FRACTION = 0.60

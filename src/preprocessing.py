@@ -109,18 +109,35 @@ class CloudSEN12Preprocessor:
         
         return normalized
     
-    def extract_bands(self, image: np.ndarray) -> np.ndarray:
+    def extract_bands(self, image: np.ndarray, band_indices: Optional[list] = None) -> np.ndarray:
         """
         Extract selected bands from image.
         
         Args:
-            image (np.ndarray): Image array of shape (num_bands, H, W)
+            image (np.ndarray): Image array of shape (num_bands, H, W) or (H, W, num_bands)
+            band_indices (list, optional): Band indices to extract. Defaults to selected_bands.
             
         Returns:
-            np.ndarray: Extracted bands of shape (len(selected_bands), H, W)
+            np.ndarray: Extracted bands in the same channel layout as the input.
         """
-        extracted = image[self.selected_bands, :, :]
-        return extracted
+        band_indices = self.selected_bands if band_indices is None else band_indices
+        if image.ndim != 3:
+            raise ValueError(f"Expected a 3D image array, got shape {image.shape}")
+
+        channel_count = len(self.SENTINEL2_BANDS)
+        if image.shape[0] == channel_count and image.shape[-1] != channel_count:
+            return image[band_indices, :, :]
+        if image.shape[-1] == channel_count and image.shape[0] != channel_count:
+            return image[:, :, band_indices]
+
+        if image.shape[0] <= 16 and image.shape[-1] > 16:
+            return image[band_indices, :, :]
+        if image.shape[-1] <= 16 and image.shape[0] > 16:
+            return image[:, :, band_indices]
+        raise ValueError(
+            "Cannot infer channel layout for image shape "
+            f"{image.shape}; use channel-first or channel-last data with at most 16 bands."
+        )
     
     def preprocess(self, image: np.ndarray, mask: Optional[np.ndarray] = None) \
             -> Tuple[np.ndarray, Optional[np.ndarray]]:
