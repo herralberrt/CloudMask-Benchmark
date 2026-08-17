@@ -14,8 +14,8 @@ This project trains and compares different ML approaches (Random Forest and U-Ne
 **Completed Tasks:**
 - ✓ Dataset analysis: CloudSEN12 (Sentinel-2 L2A)
   - 50,247 total samples
-  - 12 spectral bands (11 data + 1 SCL)
-  - 4 cloud classes: Clear sky, Thin cloud, Thick cloud, Cloud shadow
+  - 14 raster bands in L2A: 12 optical bands + AOT + WVP
+  - 4 cloud classes: Clear sky, Thick cloud, Thin cloud, Cloud shadow
 - ✓ Band selection: RGB + NIR (4 channels for optimal cloud discrimination)
 - ✓ Preprocessing pipeline: Normalization by 10000 → [0, 1] range
 - ✓ Data split: 60% train / 20% val / 20% test (5,024 samples subset)
@@ -42,11 +42,15 @@ This project trains and compares different ML approaches (Random Forest and U-Ne
 
 ---
 
-### Week 2: Baseline & Random Forest (IN PROGRESS)
-- [ ] Extract Sentinel-2 SCL baseline
-- [ ] Implement Random Forest classifier
-- [ ] Feature engineering (spectral indices)
-- [ ] Evaluate and compare
+### Week 2: Baseline & Random Forest (INITIAL RUN COMPLETE)
+- [x] Load CloudSEN12 L2A and the matching operational-mask dataset
+- [x] Use Sen2Cor as the operational baseline
+- [x] Train a Random Forest classifier with spectral features
+- [x] Evaluate and compare on held-out scenes
+
+The L2A asset does not contain an SCL band. The operational comparison uses
+`cloudsen12-extra/cloudmask_sen2cor`, while label value `99` is treated as
+no-data. The reproducible Week 2 pipeline is in `src/week2_pipeline.py`.
 
 ### Week 3-5: U-Net, Comparison & Analysis
 - [ ] U-Net segmentation model
@@ -62,24 +66,27 @@ This project trains and compares different ML approaches (Random Forest and U-Ne
 CloudMask-Benchmark/
 ├── notebooks/
 │   ├── 01_cloudsen12_exploration.ipynb        [Week 1 ✓]
-│   ├── 02_baseline_and_rf.ipynb               [Week 2]
-│   ├── 03_unet_training.ipynb                 [Week 3]
-│   ├── 04_model_comparison.ipynb              [Week 4]
-│   └── 05_final_analysis.ipynb                [Week 5]
+│   └── 02_baseline_and_rf.ipynb               [exploratory draft]
 ├── src/
-│   ├── preprocessing.py      # Data preprocessing utilities
-│   ├── config.py            # Configuration management
-│   ├── models.py            # Model definitions (Week 2+)
-│   └── metrics.py           # Evaluation metrics (Week 2+)
+│   ├── config.py            # Centralized configuration
+│   ├── preprocessing.py     # Data preprocessing utilities
+│   └── week2_pipeline.py    # Canonical Week 2 baseline and RF pipeline
 ├── data/
-│   ├── raw/                 # CloudSEN12 data (via tacoreader)
-│   └── processed/           # Preprocessed data (Week 2+)
+│   ├── raw/                 # Reserved for optional local downloads
+│   └── processed/           # Reserved for generated local data
 ├── outputs/
-│   ├── figures/             # Visualizations
-│   └── *.json              # Configuration files
+│   ├── figures/             # Week 1 visualizations
+│   ├── class_info.json      # Class definitions and distribution
+│   ├── split_info.json      # Reproducible train/validation/test split
+│   ├── week2_results.json   # RF and Sen2Cor metrics
+│   ├── rf_feature_importance.json
+│   └── random_forest.joblib
 ├── requirements.txt
 └── README.md
 ```
+
+Planned files for Weeks 3–5, such as the U-Net model, comparison notebook,
+and final analysis notebook, will be added when those weeks are implemented.
 
 ---
 
@@ -89,6 +96,20 @@ CloudMask-Benchmark/
 ```bash
 pip install -r requirements.txt
 ```
+
+### Run the Week 2 experiment
+```bash
+python src/week2_pipeline.py --train-scenes 10 --validation-scenes 5 --max-pixels-per-scene 2000
+```
+
+This streams a small, deterministic subset from CloudSEN12 and writes
+`outputs/week2_results.json`, `outputs/random_forest.joblib`, and
+`outputs/rf_feature_importance.json`. Increase `--train-scenes` and
+`--validation-scenes` when a larger experiment is practical.
+
+`notebooks/02_baseline_and_rf.ipynb` contains the original exploratory Week 2
+draft. It assumes an SCL band inside the L2A raster and is not the canonical
+pipeline for this dataset; use `src/week2_pipeline.py` for reproducible runs.
 
 ### Run Week 1 Exploration
 ```bash

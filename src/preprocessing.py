@@ -39,8 +39,8 @@ class CloudSEN12Preprocessor:
     # Cloud mask class labels
     CLASS_LABELS = {
         0: 'Clear sky',
-        1: 'Thin cloud',
-        2: 'Thick cloud',
+        1: 'Thick cloud',
+        2: 'Thin cloud',
         3: 'Cloud shadow'
     }
     
