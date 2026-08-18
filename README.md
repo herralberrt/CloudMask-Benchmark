@@ -52,8 +52,18 @@ The L2A asset does not contain an SCL band. The operational comparison uses
 `cloudsen12-extra/cloudmask_sen2cor`, while label value `99` is treated as
 no-data. The reproducible Week 2 pipeline is in `src/week2_pipeline.py`.
 
-### Week 3-5: U-Net, Comparison & Analysis
-- [ ] U-Net segmentation model
+### Week 3: U-Net Segmentation (INITIAL RUN COMPLETE)
+- [x] Extract 128x128 image/mask patches
+- [x] Implement a compact PyTorch U-Net
+- [x] Train with validation-loss monitoring
+- [x] Save the best checkpoint and compare with RF/Sen2Cor
+
+The Week 3 pipeline is in `src/week3_pipeline.py` and uses the same CloudSEN12
+scene split as Week 2. It writes `outputs/week3_results.json` and
+`outputs/unet_best.pt`, plus `outputs/week3_predictions.npz` for qualitative
+inspection of validation patches.
+
+### Week 4-5: Comparison & Analysis
 - [ ] Complete model evaluation
 - [ ] Detailed failure analysis
 - [ ] Final report and presentation
@@ -70,7 +80,9 @@ CloudMask-Benchmark/
 ├── src/
 │   ├── config.py            # Centralized configuration
 │   ├── preprocessing.py     # Data preprocessing utilities
-│   └── week2_pipeline.py    # Canonical Week 2 baseline and RF pipeline
+│   ├── week2_pipeline.py    # Canonical Week 2 baseline and RF pipeline
+│   ├── unet_model.py        # Compact U-Net definition
+│   └── week3_pipeline.py    # Week 3 patch training and comparison
 ├── data/
 │   ├── raw/                 # Reserved for optional local downloads
 │   └── processed/           # Reserved for generated local data
@@ -79,8 +91,11 @@ CloudMask-Benchmark/
 │   ├── class_info.json      # Class definitions and distribution
 │   ├── split_info.json      # Reproducible train/validation/test split
 │   ├── week2_results.json   # RF and Sen2Cor metrics
+│   ├── week3_results.json   # U-Net, RF, and Sen2Cor metrics
+│   ├── week3_predictions.npz
 │   ├── rf_feature_importance.json
-│   └── random_forest.joblib
+│   ├── random_forest.joblib
+│   └── unet_best.pt
 ├── requirements.txt
 └── README.md
 ```
@@ -110,6 +125,13 @@ This streams a small, deterministic subset from CloudSEN12 and writes
 `notebooks/02_baseline_and_rf.ipynb` contains the original exploratory Week 2
 draft. It assumes an SCL band inside the L2A raster and is not the canonical
 pipeline for this dataset; use `src/week2_pipeline.py` for reproducible runs.
+
+### Run the Week 3 experiment
+```bash
+python src/week3_pipeline.py --train-scenes 3 --validation-scenes 2 --epochs 3 --max-patches-per-scene 4
+```
+
+The U-Net run uses CUDA automatically when available and falls back to CPU.
 
 ### Run Week 1 Exploration
 ```bash

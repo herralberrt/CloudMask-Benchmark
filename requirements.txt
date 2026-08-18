@@ -60,6 +60,7 @@ pyzmq==27.1.0
 rasterio==1.5.1
 requests==2.34.2
 scikit-learn==1.9.0
+torch==2.5.1
 tacoreader==0.6.5
 scipy==1.18.0
 six==1.17.0
