@@ -20,8 +20,8 @@ class Config:
     # Full dataset statistics
     FULL_DATASET_SIZE = 50247
     
-    # Week 1 subset configuration
-    SUBSET_FRACTION = 0.10  # Use 10% for Week 1
+    # Reproducible subset configuration
+    SUBSET_FRACTION = 0.10  # Use 10% of the full dataset
     SUBSET_SIZE = 5024
     
     # Train/Val/Test split
@@ -55,17 +55,13 @@ class Config:
     # Evaluation metrics
     METRICS = ['precision', 'recall', 'f1_score', 'iou']
     
-    # File paths
-    DATA_DIR = Path("../data")
-    RAW_DATA_DIR = DATA_DIR / "raw"
-    PROCESSED_DATA_DIR = DATA_DIR / "processed"
+    # File paths (CloudSEN12 streams remotely; no local data directory is used)
     OUTPUTS_DIR = Path("../outputs")
     FIGURES_DIR = OUTPUTS_DIR / "figures"
     NOTEBOOKS_DIR = Path("../notebooks")
     SRC_DIR = Path("../src")
     
-    # Configuration file names
-    DATASET_CONFIG_FILE = OUTPUTS_DIR / "dataset_config.json"
+    # Configuration file names (produced by the dataset exploration notebook)
     PREPROCESSING_CONFIG_FILE = OUTPUTS_DIR / "preprocessing_config.json"
     CLASS_INFO_FILE = OUTPUTS_DIR / "class_info.json"
     SPLIT_INFO_FILE = OUTPUTS_DIR / "split_info.json"
@@ -112,7 +108,7 @@ class Config:
     def print_summary(cls) -> None:
         """Print configuration summary."""
         print("\n" + "="*70)
-        print("WEEK 1 - EXPERIMENTAL CONFIGURATION")
+        print("CLOUDSEN12 EXPERIMENT CONFIGURATION")
         print("="*70)
         
         print(f"\nDataset:")

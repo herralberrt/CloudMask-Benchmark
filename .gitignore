@@ -1,11 +1,3 @@
-# Dataset
-data/raw/*
-data/processed/*
-
-# Keep folders in Git
-!data/raw/.gitkeep
-!data/processed/.gitkeep
-
 # Python
 __pycache__/
 *.pyc
