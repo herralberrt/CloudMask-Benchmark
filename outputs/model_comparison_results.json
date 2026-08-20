@@ -1,205 +1,221 @@
 {
-  "test_scenes": 50,
-  "test_pixels": 13107200,
+  "test_scenes": 100,
+  "test_pixels": 26214400,
   "patch_size": 128,
   "overall": {
     "sen2cor_baseline": {
-      "precision": 0.6643013503769951,
-      "recall": 0.5486127275751899,
-      "f1": 0.5737760201404704,
-      "iou": 0.44203447760573156
+      "precision": 0.6002571690622257,
+      "recall": 0.4683520285635882,
+      "f1": 0.467161149834602,
+      "iou": 0.34605753992793353
     },
     "random_forest": {
-      "precision": 0.44805394860180553,
-      "recall": 0.4306428195495259,
-      "f1": 0.432830651264949,
-      "iou": 0.3214847634569178
+      "precision": 0.47572070561708796,
+      "recall": 0.509921394970445,
+      "f1": 0.47744919769968464,
+      "iou": 0.36028547380213183
     },
     "unet": {
-      "precision": 0.42072043376531737,
-      "recall": 0.4133807819550387,
-      "f1": 0.4083417122667744,
-      "iou": 0.29543580873333525
+      "precision": 0.541026380887302,
+      "recall": 0.5712100306715774,
+      "f1": 0.5423776406815651,
+      "iou": 0.4122753596861174
     }
   },
   "per_class": {
     "sen2cor_baseline": {
       "Clear sky": {
-        "precision": 0.7030000183059986,
-        "recall": 0.9714760144470933,
-        "f1": 0.8157150566285214,
-        "iou": 0.6887827639742722
+        "precision": 0.7666525531468195,
+        "recall": 0.8139387367088665,
+        "f1": 0.7895883200266448,
+        "iou": 0.6523303873307188
       },
       "Thick cloud": {
-        "precision": 0.9934206833545708,
-        "recall": 0.6492035113432046,
-        "f1": 0.7852461907678324,
-        "iou": 0.6464241435589141
+        "precision": 0.6217533385993659,
+        "recall": 0.7278083099665374,
+        "f1": 0.6706136723178511,
+        "iou": 0.5044535650423752
       },
       "Thin cloud": {
-        "precision": 0.22122825980151323,
-        "recall": 0.2316534622903591,
-        "f1": 0.2263208685162847,
-        "iou": 0.1275996681130048
+        "precision": 0.19526241472039244,
+        "recall": 0.21536456939217233,
+        "f1": 0.20482144375200267,
+        "iou": 0.11409530435796233
       },
       "Cloud shadow": {
-        "precision": 0.7395564400458978,
-        "recall": 0.3421179222201027,
-        "f1": 0.4678219646492427,
-        "iou": 0.3053313347767353
+        "precision": 0.8173603697823248,
+        "recall": 0.11629649818677648,
+        "f1": 0.20362116324190935,
+        "iou": 0.1133509029806779
       }
     },
     "random_forest": {
       "Clear sky": {
-        "precision": 0.7057291026264385,
-        "recall": 0.7569659870136581,
-        "f1": 0.7304501539898257,
-        "iou": 0.5753615395924926
+        "precision": 0.8053642048388974,
+        "recall": 0.7292072483992481,
+        "f1": 0.7653959866522853,
+        "iou": 0.6199526150711763
       },
       "Thick cloud": {
-        "precision": 0.8175292848301136,
-        "recall": 0.5964150106760527,
-        "f1": 0.6896830924522253,
-        "iou": 0.526348311984274
+        "precision": 0.6313436324993416,
+        "recall": 0.8551659842495617,
+        "f1": 0.7264044481149049,
+        "iou": 0.5703572433491365
       },
       "Thin cloud": {
-        "precision": 0.00012843926933890724,
-        "recall": 0.0003004424323490071,
-        "f1": 0.0001799498851895082,
-        "iou": 8.998303881350584e-05
+        "precision": 0.143201650293458,
+        "recall": 0.0312643811389199,
+        "f1": 0.0513235835966418,
+        "iou": 0.026337663433813677
       },
       "Cloud shadow": {
-        "precision": 0.26882896768133135,
-        "recall": 0.3688898380760437,
-        "f1": 0.31100940873255545,
-        "iou": 0.1841392192120912
+        "precision": 0.32297333483665475,
+        "recall": 0.42404796609405015,
+        "f1": 0.3666727724349065,
+        "iou": 0.2244943733544008
       }
     },
     "unet": {
       "Clear sky": {
-        "precision": 0.6186205378411318,
-        "recall": 0.7126438288653417,
-        "f1": 0.6623118889488675,
-        "iou": 0.49511682392724127
+        "precision": 0.8980492268400487,
+        "recall": 0.7308788852356389,
+        "f1": 0.8058860460860957,
+        "iou": 0.6748820273347214
       },
       "Thick cloud": {
-        "precision": 0.8223993210681746,
-        "recall": 0.583267739514041,
-        "f1": 0.6824930403912818,
-        "iou": 0.5180185466298964
+        "precision": 0.6132110059327784,
+        "recall": 0.9394181090717934,
+        "f1": 0.7420465300931662,
+        "iou": 0.589883924838749
       },
       "Thin cloud": {
-        "precision": 0.0,
-        "recall": 0.0,
-        "f1": 0.0,
-        "iou": 0.0
+        "precision": 0.2257213062649541,
+        "recall": 0.13742536541906117,
+        "f1": 0.1708391425011898,
+        "iou": 0.093397549920675
       },
       "Cloud shadow": {
-        "precision": 0.24186187615196306,
-        "recall": 0.3576115594407721,
-        "f1": 0.2885619197269484,
-        "iou": 0.16860786437620326
+        "precision": 0.42712398451142664,
+        "recall": 0.4771177629598161,
+        "f1": 0.4507388440458087,
+        "iou": 0.2909379366503243
       }
     }
   },
   "difficult_cases": {
     "thin_cloud": {
-      "pixel_count": 242975,
+      "pixel_count": 2036087,
       "sen2cor_baseline": {
-        "agreement_rate": 0.2316534622903591,
-        "false_cloud_rate": 0.23376890626607677
+        "agreement_rate": 0.21536456939217233,
+        "false_cloud_rate": 0.7737169384215901
       },
       "random_forest": {
-        "agreement_rate": 0.0003004424323490071,
-        "false_cloud_rate": 0.005691943615598312
+        "agreement_rate": 0.0312643811389199,
+        "false_cloud_rate": 0.462021023659598
       },
       "unet": {
-        "agreement_rate": 0.0,
-        "false_cloud_rate": 0.0
+        "agreement_rate": 0.13742536541906117,
+        "false_cloud_rate": 0.676577179658826
       }
     },
     "snow": {
-      "pixel_count": 747217,
+      "pixel_count": 1104691,
       "sen2cor_baseline": {
-        "agreement_rate": 0.7335780636682516,
+        "agreement_rate": 0.7387866833349779,
         "false_cloud_rate": 0.0
       },
       "random_forest": {
-        "agreement_rate": 0.17786800889166066,
-        "false_cloud_rate": 0.9902478128843428
+        "agreement_rate": 0.22380104481705743,
+        "false_cloud_rate": 0.9083544629222108
       },
       "unet": {
-        "agreement_rate": 0.18008690915758072,
-        "false_cloud_rate": 0.9843311916083279
+        "agreement_rate": 0.4414166495427228,
+        "false_cloud_rate": 0.713618559398058
       }
     },
     "bright_surfaces": {
-      "pixel_count": 555298,
+      "pixel_count": 3140345,
       "sen2cor_baseline": {
-        "agreement_rate": 0.9811470597769125,
-        "false_cloud_rate": 0.018852940223087422
+        "agreement_rate": 0.8379643001007852,
+        "false_cloud_rate": 0.1620060853186513
       },
       "random_forest": {
-        "agreement_rate": 0.00029533691819527534,
-        "false_cloud_rate": 0.9997046630818047
+        "agreement_rate": 0.5875507308910327,
+        "false_cloud_rate": 0.3962586913221318
       },
       "unet": {
-        "agreement_rate": 0.005593393097039788,
-        "false_cloud_rate": 0.9913451876289848
+        "agreement_rate": 0.6855995121555116,
+        "false_cloud_rate": 0.3143976219173371
       }
     },
     "cloud_boundaries": {
-      "pixel_count": 532122,
+      "pixel_count": 787580,
       "sen2cor_baseline": {
-        "agreement_rate": 0.3782459661506196,
-        "false_cloud_rate": 0.06685872788571041
+        "agreement_rate": 0.39768658422001574,
+        "false_cloud_rate": 0.26416998908047434
       },
       "random_forest": {
-        "agreement_rate": 0.4020356234096692,
-        "false_cloud_rate": 0.09660378634974687
+        "agreement_rate": 0.4671081033037914,
+        "false_cloud_rate": 0.3278117778511389
       },
       "unet": {
-        "agreement_rate": 0.35052487963286616,
-        "false_cloud_rate": 0.0594450144891585
+        "agreement_rate": 0.43346326722364714,
+        "false_cloud_rate": 0.5999111201401762
       }
     }
   },
   "strengths_and_weaknesses": {
     "sen2cor_baseline": {
-      "weakest_class": "Thin cloud",
-      "weakest_class_iou": 0.1275996681130048,
+      "weakest_class": "Cloud shadow",
+      "weakest_class_iou": 0.1133509029806779,
       "strongest_class": "Clear sky",
-      "strongest_class_iou": 0.6887827639742722
+      "strongest_class_iou": 0.6523303873307188
     },
     "random_forest": {
       "weakest_class": "Thin cloud",
-      "weakest_class_iou": 8.998303881350584e-05,
+      "weakest_class_iou": 0.026337663433813677,
       "strongest_class": "Clear sky",
-      "strongest_class_iou": 0.5753615395924926
+      "strongest_class_iou": 0.6199526150711763
     },
     "unet": {
       "weakest_class": "Thin cloud",
-      "weakest_class_iou": 0.0,
-      "strongest_class": "Thick cloud",
-      "strongest_class_iou": 0.5180185466298964
+      "weakest_class_iou": 0.093397549920675,
+      "strongest_class": "Clear sky",
+      "strongest_class_iou": 0.6748820273347214
     }
   },
   "qualitative_examples": [
     {
-      "scene_index": 4018,
-      "figure": "outputs/figures/model_comparison/scene_4018.png"
+      "scene_index": 3,
+      "figure": "outputs/figures/model_comparison/scene_3.png"
     },
     {
-      "scene_index": 4019,
-      "figure": "outputs/figures/model_comparison/scene_4019.png"
+      "scene_index": 4,
+      "figure": "outputs/figures/model_comparison/scene_4.png"
     },
     {
-      "scene_index": 4020,
-      "figure": "outputs/figures/model_comparison/scene_4020.png"
+      "scene_index": 5,
+      "figure": "outputs/figures/model_comparison/scene_5.png"
     },
     {
-      "scene_index": 4021,
-      "figure": "outputs/figures/model_comparison/scene_4021.png"
+      "scene_index": 9,
+      "figure": "outputs/figures/model_comparison/scene_9.png"
+    },
+    {
+      "scene_index": 16,
+      "figure": "outputs/figures/model_comparison/scene_16.png"
+    },
+    {
+      "scene_index": 34,
+      "figure": "outputs/figures/model_comparison/scene_34.png"
+    },
+    {
+      "scene_index": 54,
+      "figure": "outputs/figures/model_comparison/scene_54.png"
+    },
+    {
+      "scene_index": 55,
+      "figure": "outputs/figures/model_comparison/scene_55.png"
     }
   ]
 }
