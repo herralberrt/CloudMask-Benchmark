@@ -62,8 +62,6 @@ class Config:
     SRC_DIR = Path("../src")
     
     # Configuration file names (produced by the dataset exploration notebook)
-    PREPROCESSING_CONFIG_FILE = OUTPUTS_DIR / "preprocessing_config.json"
-    CLASS_INFO_FILE = OUTPUTS_DIR / "class_info.json"
     SPLIT_INFO_FILE = OUTPUTS_DIR / "split_info.json"
     
     @classmethod
