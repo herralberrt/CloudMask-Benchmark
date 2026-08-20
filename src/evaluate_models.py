@@ -32,6 +32,7 @@ try:
         spectral_features,
     )
     from .unet_model import UNet
+    from .train_random_forest import run_experiment as train_rf_experiment
 except ImportError:
     from cloudsen12_data import (
         CLASS_NAMES,
@@ -47,9 +48,27 @@ except ImportError:
         spectral_features,
     )
     from unet_model import UNet
+    from train_random_forest import run_experiment as train_rf_experiment
 
 BRIGHTNESS_THRESHOLD = 0.3  # Reflectance above which a "clear" pixel counts as a bright surface
 BRIGHTNESS_FEATURE_COLUMN = 5  # Column index of "brightness" in spectral_features' output
+
+
+def generate_split_indices(split_info: dict) -> tuple:
+    """Regenerate train/val/test indices from split parameters using seed."""
+    subset_size = split_info["subset_size"]
+    train_size = split_info["train_size"]
+    val_size = split_info["val_size"]
+    seed = split_info["random_seed"]
+    
+    all_indices = np.arange(subset_size)
+    np.random.RandomState(seed).shuffle(all_indices)
+    
+    train_indices = sorted(all_indices[:train_size].tolist())
+    val_indices = sorted(all_indices[train_size:train_size + val_size].tolist())
+    test_indices = sorted(all_indices[train_size + val_size:].tolist())
+    
+    return train_indices, val_indices, test_indices
 
 
 def run_unet_full_scene(model, image: np.ndarray, device: torch.device) -> np.ndarray:
@@ -141,7 +160,25 @@ def run_evaluation(test_indices: Iterable[int], output_dir: Path, num_figures: i
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     l2a_dataset, extra_dataset = load_datasets()
 
-    rf = joblib.load(output_dir / "random_forest_model.joblib")
+    # Auto-generate Random Forest model if it doesn't exist
+    rf_model_path = output_dir / "random_forest_model.joblib"
+    if not rf_model_path.exists():
+        print("Random Forest model not found. Training it now...")
+        split_info_path = output_dir / "split_info.json"
+        if split_info_path.exists():
+            split = json.loads(split_info_path.read_text())
+            train_indices, val_indices, _ = generate_split_indices(split)
+            train_rf_experiment(
+                train_indices[:50],
+                val_indices[:10],
+                output_dir,
+                max_pixels_per_scene=5000,
+            )
+            print("Random Forest model trained and saved.")
+        else:
+            raise FileNotFoundError(f"Cannot train RF model: split_info.json not found at {split_info_path}")
+
+    rf = joblib.load(rf_model_path)
     unet = UNet().to(device)
     checkpoint = torch.load(output_dir / "unet_best.pt", map_location=device, weights_only=True)
     unet.load_state_dict(checkpoint["model_state"])
@@ -228,8 +265,9 @@ if __name__ == "__main__":
     args = parse_args()
     root = Path(__file__).resolve().parents[1]
     split = json.loads((root / "outputs" / "split_info.json").read_text())
+    _, _, test_indices = generate_split_indices(split)
     print(json.dumps(run_evaluation(
-        split["test_indices"][: args.test_scenes],
+        test_indices[: args.test_scenes],
         root / "outputs",
         num_figures=args.num_figures,
     ), indent=2))
