@@ -185,3 +185,20 @@ Only if you have:
 4. **Data >> Architecture**  U-Net trained on 20 scenes underperforms RF trained on 10, until epoch 4 when it overfits
 5. **Randomized splits matter**  though results were identical, methodology is now sound for future work
 6. **Difficult cases need special handling**  focal loss, cost-weighted loss, or separate classifiers for edge cases
+
+---
+
+## Configuration Details
+
+| Parameter | Value | Rationale |
+|-----------|-------|-----------|
+| Dataset | CloudSEN12 L2A | Global coverage, large labeled dataset |
+| Subset | 10% (5,024 scenes) | Computational efficiency while maintaining representativeness |
+| Bands | RGBN (Bands 4,3,2,8) | Minimal required for cloud detection |
+| Normalization | x / 10000 | Sentinel-2 reflectance normalization (0-1 range) |
+| Classes | 4 (clear sky, thick cloud, thin cloud, cloud shadow) | CloudSEN12 L2A standard labels |
+| Train/Val/Test split | 60/20/20, randomized | Geographic distribution, reproducibility (seed=42) |
+| RF features | 7 (NDVI, brightness, greenness, RGBN) | Minimal hand-engineered spectral indices |
+| U-Net input size | 128×128 patches | Standard segmentation tile size; memory efficient |
+| U-Net architecture | 4 conv blocks, skip connections | Compact (500KB checkpoint vs. 10+ MB standard) |
+| Evaluation metrics | Precision, Recall, F1, IoU | Per-class and macro-averaged; standard segmentation metrics |

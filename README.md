@@ -140,48 +140,6 @@ CloudMask-Benchmark/
 
 ---
 
-## Pipeline Overview
-
-### 1. Train Random Forest Baseline (50 scenes)
-
-```bash
-python src/train_random_forest.py --train-scenes 50 --validation-scenes 10 --max-pixels-per-scene 5000
-```
-
-Trains a Random Forest on 7 spectral features (NDVI, brightness, greenness, etc.). Output: 250K training pixels.
-
-### 2. Train U-Net (100 scenes)
-
-```bash
-python src/train_unet.py --train-scenes 100 --validation-scenes 20 --epochs 12 --max-patches-per-scene 32 --batch-size 16
-```
-
-Trains a compact U-Net on 128x128 pixel patches. Output: 3200 training patches, 12 epoch training history.
-
-### 3. Evaluate on Held-Out Test Set
-
-```bash
-python src/evaluate_models.py --test-scenes 100 --num-figures 8
-```
-
-Evaluates all three methods (Sen2Cor, RF, U-Net) on 100 unseen test scenes. Generates comparison figures and detailed metrics.
-
----
-
-## Configuration
-
-| Parameter | Value | Rationale |
-|-----------|-------|-----------|
-| Dataset | CloudSEN12 L2A | Global coverage, large labeled dataset |
-| Subset | 10% (5024 scenes) | Computational efficiency while maintaining representativeness |
-| Bands | RGBN (Bands 4,3,2,8) | Minimal required for cloud detection |
-| Normalization | x / 10000 | Sentinel-2 reflectance normalization |
-| Classes | 4 (clear, thick cloud, thin cloud, shadow) | CloudSEN12 label standard |
-| Train/Val/Test split | 60/20/20, randomized | Geographic distribution, reproducibility (seed=42) |
-| RF features | 7 (NDVI, brightness, greenness, RGBN) | Minimal hand-engineered set |
-| U-Net input size | 128x128 patches | Standard segmentation tile size |
-| Evaluation metrics | Precision, Recall, F1, IoU | Per-class and macro-averaged |
-
 ---
 
 ## Recommendations
@@ -210,15 +168,9 @@ Data volume is the primary differentiator. U-Net wins with 100 scenes. Sen2Cor w
 
 ---
 
-## Technologies Used
+## Technologies
 
-- Python 3.12
-- PyTorch (U-Net)
-- scikit-learn (Random Forest, metrics)
-- Rasterio (GeoTIFF I/O)
-- tacoreader (remote CloudSEN12 streaming)
-- NumPy, Pandas (data processing)
-- Matplotlib (visualization)
+Python 3.12, PyTorch, scikit-learn, Rasterio, tacoreader, NumPy, Pandas, Matplotlib
 
 ---
 
@@ -244,8 +196,12 @@ See [docs/ANALYSIS.md](docs/ANALYSIS.md) for:
 
 ---
 
-## Final Verdict
+## Key Takeaway
 
-U-Net trained on 100 scenes achieves state-of-the-art performance on CloudSEN12, beating the operational Sen2Cor mask by 16% F1-score. This validates deep learning for cloud detection when given adequate training data.
+**Deep learning (U-Net) outperforms operational baselines when adequate labeled training data is available.** This benchmark demonstrates:
 
-The project provides a reproducible benchmark framework for training custom cloud detection models on new sensors or datasets.
+1. Data volume drives performance more than architecture choice
+2. Custom ML models can beat established operational algorithms
+3. Reproducible methodology enables comparison across sensors and datasets
+
+**Next steps:** Validate scaling projections on larger CloudSEN12 subsets and explore transfer learning across different Sentinel-2 time periods.
