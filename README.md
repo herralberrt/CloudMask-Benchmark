@@ -28,6 +28,19 @@ cat outputs/model_comparison_results.json | python -m json.tool
 jupyter notebook notebooks/cloud_masking_report.ipynb
 ```
 
+### Quick Start with Docker
+
+```bash
+# Build image
+docker build -t cloudmask-benchmark .
+
+# Run evaluation (generates results in outputs/)
+docker run -v $(pwd)/outputs:/app/outputs cloudmask-benchmark
+
+# Or run custom command
+docker run cloudmask-benchmark python src/train_random_forest.py --train-scenes 50
+```
+
 ---
 
 ## Results
