@@ -38,9 +38,9 @@ jupyter notebook notebooks/cloud_masking_report.ipynb
 |-------|--------------|---------|----------|-----------|
 | U-Net | 100 | 0.5424 | 0.4123 | +16% F1 |
 | Random Forest | 50 | 0.4774 | 0.3603 | +2% F1 |
-| Sen2Cor | - | 0.4672 | 0.3461 | baseline |
+| Sen2Cor (baseline) | Pre-trained | 0.4672 | 0.3461 | baseline |
 
-U-Net achieves state-of-the-art performance, beating the operational baseline by 16%.
+U-Net achieves state-of-the-art performance, beating the operational baseline (Sen2Cor) by 16% F1-score.
 
 ### Validation Performance
 
@@ -48,7 +48,7 @@ U-Net achieves state-of-the-art performance, beating the operational baseline by
 |-------|--------------|--------|---------|
 | U-Net | 100 | 0.5539 | 0.4159 |
 | Random Forest | 50 | 0.4658 | 0.3367 |
-| Sen2Cor | - | 0.3746 | 0.2515 |
+| Sen2Cor (baseline) | Pre-trained | 0.3746 | 0.2515 |
 
 Both trained models outperform Sen2Cor on validation, with U-Net showing best generalization (val F1 0.554 -> test F1 0.542).
 
